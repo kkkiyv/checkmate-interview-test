@@ -1,30 +1,94 @@
 import Head from 'next/head'
 import GoogleButton from 'react-google-button'
-import {getAuth, GoogleAuthProvider} from "firebase/auth";
+import {getAuth, signInWithRedirect,getRedirectResult, GoogleAuthProvider} from "firebase/auth";
 import {useRouter} from "next/router";
 import { initializeApp } from 'firebase/app';
+import  SignedIn from './signed-in';
+
+
+
+
+
 
 // Task 0: Initialize Firebase
 // Replace the following with your app's Firebase project configuration
 // https://firebase.google.com/docs/web/setup
 const firebaseConfig = {
+  
+  apiKey: "AIzaSyBYt2JhRA4oF2zHl1dLRPqDlomzC_PzGXY",
+  authDomain: "checkmate-54302.firebaseapp.com",
+  projectId: "checkmate-54302",
+  storageBucket: "checkmate-54302.appspot.com",
+  messagingSenderId: "694858094491",
+  appId: "1:694858094491:web:862dc465a0bfc1c406f33e",
+  measurementId: "G-M9Z6LJ829M"
   // Enter your own firebase config here
 };
 
-// const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
 
 // GoogleAuthProvider instance
-// const provider = new GoogleAuthProvider();
+const provider = new GoogleAuthProvider();
 // Firebase Auth instance
-// const auth = getAuth(app);
+const auth = getAuth(app);
 
 export default function Home() {
   //Next.js router
-  const router = useRouter();
+const router = useRouter();
+const {pathname} = router
+  
+
+  
 
   // Task 1: Implement Google Sign in with Firebase
   // https://firebase.google.com/docs/auth/web/google-signin
-  const signIn = () => {
+const signIn = () => {
+
+const auth = getAuth();
+
+signInWithRedirect(auth, provider);
+getRedirectResult(auth)
+      
+.then((result) => {
+  if (result != null) {
+    // This gives you a Google Access Token. You can use it to access Google APIs.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    if(credential!=null){
+    const token = credential.accessToken;
+    }
+    
+    router.push('/signed-in');
+   
+}
+
+
+
+
+  
+   
+
+  
+  
+  
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    console.log(errorMessage)
+    // ...
+  });
+    
+    
+    
+ 
+    
     /*
       1. Use the GoogleAuthProvider to sign in with Firebase
       2. Use signInWithRedirect to redirect the user to the Google sign in page
