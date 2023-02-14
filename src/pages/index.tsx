@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import GoogleButton from 'react-google-button'
 import {getAuth, signInWithRedirect,getRedirectResult, GoogleAuthProvider} from "firebase/auth";
-import {useRouter} from "next/router";
+import {useRouter} from "next/navigation";
 import { initializeApp } from 'firebase/app';
-import  SignedIn from './signed-in';
+
 
 
 
@@ -33,44 +33,32 @@ const provider = new GoogleAuthProvider();
 // Firebase Auth instance
 const auth = getAuth(app);
 
+
 export default function Home() {
   //Next.js router
-const router = useRouter();
-const {pathname} = router
-  
-
-  
+  const router = useRouter();
 
   // Task 1: Implement Google Sign in with Firebase
   // https://firebase.google.com/docs/auth/web/google-signin
-const signIn = () => {
+  const signIn = () => {
 
-const auth = getAuth();
+  signInWithRedirect(auth, provider);
 
-signInWithRedirect(auth, provider);
-getRedirectResult(auth)
+  router.push('/signed-in');
+  
+ 
+
+  getRedirectResult(auth)
+
       
-.then((result) => {
+  .then((result) => {
   if (result != null) {
     // This gives you a Google Access Token. You can use it to access Google APIs.
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    if(credential!=null){
-    const token = credential.accessToken;
-    }
     
-    router.push('/signed-in');
-   
-}
+  }
+ 
 
-
-
-
-  
-   
-
-  
-  
-  
     // IdP data available using getAdditionalUserInfo(result)
     // ...
   }).catch((error) => {
@@ -85,10 +73,6 @@ getRedirectResult(auth)
     // ...
   });
     
-    
-    
- 
-    
     /*
       1. Use the GoogleAuthProvider to sign in with Firebase
       2. Use signInWithRedirect to redirect the user to the Google sign in page
@@ -96,7 +80,7 @@ getRedirectResult(auth)
       4. Redirect the user to the signed-in page using Next.js router
      */
 
-  }
+  };
 
   return (
     <>

@@ -13,13 +13,18 @@
     "@types/node": "18.13.0",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
+    "css": "^3.0.0",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
     "firebase": "^9.17.1",
+    "json-loader": "^0.5.7",
     "next": "13.1.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-google-button": "^0.7.2",
     "typescript": "4.9.5"
+  },
+  "devDependencies": {
+    "css-loader": "^6.7.3"
   }
 }
