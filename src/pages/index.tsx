@@ -1,14 +1,8 @@
 import Head from 'next/head'
 import GoogleButton from 'react-google-button'
-import {getAuth, signInWithRedirect,getRedirectResult, GoogleAuthProvider} from "firebase/auth";
+import {getAuth, signInWithRedirect,getRedirectResult, GoogleAuthProvider, getAdditionalUserInfo} from "firebase/auth";
 import {useRouter} from "next/navigation";
 import { initializeApp } from 'firebase/app';
-
-
-
-
-
-
 
 // Task 0: Initialize Firebase
 // Replace the following with your app's Firebase project configuration
@@ -43,21 +37,18 @@ export default function Home() {
   const signIn = () => {
 
   signInWithRedirect(auth, provider);
+  if(auth && provider){
+    router.push('/signed-in');
+  }
 
-  router.push('/signed-in');
-  
- 
-
-  getRedirectResult(auth)
-
-      
+  getRedirectResult(auth)  
   .then((result) => {
   if (result != null) {
     // This gives you a Google Access Token. You can use it to access Google APIs.
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    
+    const user = result.user;
+    console.log(getAdditionalUserInfo(result))
   }
- 
 
     // IdP data available using getAdditionalUserInfo(result)
     // ...

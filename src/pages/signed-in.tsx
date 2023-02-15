@@ -1,15 +1,8 @@
 import {GetServerSideProps, InferGetServerSidePropsType} from "next";
 import React from "react";
 
-
-
-
-
 export default function SignedIn({ joke }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-
-
   return (
-    
     <div>
     <link href="https://uploads-ssl.webflow.com/63e9e4f0d5ced91c78ca35c5/css/kennys-trendy-site-b8e717.webflow.1262a4e6c.css" rel="stylesheet" type="text/css" />
     <div className="container">
@@ -24,25 +17,9 @@ export default function SignedIn({ joke }: InferGetServerSidePropsType<typeof ge
       </div>
     </div>
   </div>
-)
-              
-              
-            
-
-    
-
-
-    
-    
-   
-    
-    
-  
+  )
 }
     
-
-
-
 // Task 2: Fetch random jokes from the API
 // https://official-joke-api.appspot.com/jokes/programming/random
 export const getServerSideProps: GetServerSideProps = async (context) => {
